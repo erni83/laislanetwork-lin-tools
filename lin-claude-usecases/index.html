@@ -1,0 +1,682 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude at LIN — Use Cases</title>
+<link rel="stylesheet" href="https://use.typekit.net/vyv8jje.css">
+<style>
+:root {
+  --lin-primary: #6399AF;
+  --lin-navy: #2E3A4A;
+  --lin-surface-dark: #2E3A4A;
+  --lin-surface-navy: #1A2330;
+  --lin-light: #85B0C3;
+  --lin-subtle: #A8C8D6;
+  --lin-wash: #E8F1F5;
+  --lin-white: #FFFFFF;
+  --lin-coral: #E8685A;
+  --lin-mint: #7DDBB8;
+  --lin-amber: #F2C96A;
+  --lin-olive: #606637;
+
+  --cat-1: #7DDBB8;
+  --cat-2: #6399AF;
+  --cat-3: #F2C96A;
+  --cat-4: #C98ADB;
+  --cat-5: #7DB87D;
+  --cat-6: #85B0C3;
+  --cat-7: #E8685A;
+  --cat-8: #5AB8C4;
+  --cat-9: #DB9A6A;
+  --cat-10: #A8C8D6;
+  --cat-11: #606637;
+  --cat-12: #B87DB8;
+
+  --font-display: acumin-pro, sans-serif;
+  --font-display-weight: 700;
+  --font-body: caslon, serif;
+  --font-numbers: acumin-pro-wide, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%; min-height: 100vh;
+  background: var(--lin-surface-navy);
+  font-family: var(--font-body);
+  color: var(--lin-white);
+  overflow-x: hidden;
+}
+
+/* ── SCREENS ── */
+.screen { display: none; min-height: 100vh; }
+.screen.active { display: flex; flex-direction: column; }
+
+/* ── HOME SCREEN ── */
+#home {
+  padding: clamp(2rem, 5vw, 5rem) clamp(1.5rem, 5vw, 5rem);
+  position: relative;
+  overflow: hidden;
+}
+
+.home-bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.home-bg-circle-1 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(99,153,175,0.08) 0%, transparent 70%);
+  top: -200px; right: -100px;
+}
+.home-bg-circle-2 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(125,219,184,0.05) 0%, transparent 70%);
+  bottom: 0; left: -100px;
+}
+
+.home-header {
+  position: relative;
+  margin-bottom: clamp(2.5rem, 5vw, 5rem);
+}
+
+.home-eyebrow {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: clamp(0.75rem, 2vw, 1.25rem);
+}
+
+
+
+.home-eyebrow-text {
+  font-size: clamp(0.65rem, 1vw, 0.78rem);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--lin-primary);
+  display: none;
+}
+
+.home-eyebrow-logo {
+  height: clamp(80px, 5vw, 40px);
+  display: flex;
+  align-items: center;
+  margin-left: -15px;
+}
+
+.home-eyebrow-logo svg {
+  height: 100%;
+  width: auto;
+  filter: brightness(0) saturate(100%) invert(100%);
+}
+
+.home-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 5rem);
+  font-weight: var(--font-display-weight);
+  line-height: 1.05;
+  color: var(--lin-white);
+  max-width: 18ch;
+  margin-bottom: clamp(0.75rem, 1.5vw, 1.25rem);
+}
+
+.home-title em {
+  font-style: italic;
+  color: var(--lin-light);
+}
+
+.home-subtitle {
+  font-size: clamp(1rem, 1.3vw, 1.3rem);
+  color: white;
+  max-width: 62ch;
+  line-height: 1.65;
+}
+
+.home-subtitle strong {
+  color: var(--lin-wash);
+  font-weight: 500;
+}
+
+/* CATEGORY GRID */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: clamp(0.75rem, 1.5vw, 1.25rem);
+  position: relative;
+}
+
+.cat-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  padding: clamp(1.25rem, 2vw, 1.75rem);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.cat-card:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.14);
+  transform: translateY(-2px);
+}
+
+.cat-card:hover::before { transform: scaleX(1); }
+
+.cat-number {
+  font-family: var(--font-numbers);
+  font-size: clamp(0.85rem, 1.5vw, 1.1rem);
+  font-style: normal;
+  color: var(--lin-primary);
+  opacity: 1;
+}
+
+.cat-name {
+  font-family: var(--font-display);
+  font-size: clamp(0.95rem, 1.4vw, 1.2rem);
+  font-weight: var(--font-display-weight);
+  color: var(--lin-wash);
+  line-height: 1.3;
+}
+
+.cat-count {
+  font-family: var(--font-display);
+  font-size: clamp(0.75rem, 1.1vw, 0.9rem);
+  color: rgba(163,200,214,0.45);
+  font-weight: var(--font-display-weight);
+  margin-top: auto;
+}
+
+.cat-arrow {
+  position: absolute;
+  bottom: clamp(1rem, 1.5vw, 1.5rem);
+  right: clamp(1rem, 1.5vw, 1.5rem);
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.cat-arrow svg {
+  width: 8px; height: 8px;
+  stroke: var(--accent);
+  fill: none;
+  stroke-width: 2;
+}
+
+.cat-card:hover .cat-arrow { opacity: 1; }
+
+/* ── DETAIL SCREEN ── */
+#detail {
+  padding: clamp(1.5rem, 4vw, 4rem) clamp(1.5rem, 5vw, 5rem);
+  flex-direction: column;
+}
+
+.detail-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+}
+
+.back-btn {
+  display: flex; align-items: center; gap: 8px;
+  background: none; border: none;
+  color: var(--lin-subtle);
+  font-family: var(--font-display);
+  font-size: clamp(0.82rem, 1.2vw, 0.95rem);
+  font-weight: var(--font-display-weight);
+  cursor: pointer;
+  padding: 6px 12px 6px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(163,200,214,0.15);
+  transition: all 0.2s ease;
+  letter-spacing: 0.04em;
+}
+
+.back-btn:hover {
+  background: rgba(163,200,214,0.07);
+  color: var(--lin-white);
+  border-color: rgba(163,200,214,0.3);
+}
+
+.back-btn svg {
+  width: 12px; height: 12px;
+  stroke: currentColor; fill: none; stroke-width: 2;
+}
+
+.detail-header {
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  max-width: 800px;
+}
+
+.detail-eyebrow {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: clamp(0.75rem, 1.5vw, 1.25rem);
+}
+
+.detail-eyebrow-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+.detail-eyebrow-text {
+  font-family: var(--font-display);
+  font-size: clamp(0.75rem, 1.1vw, 0.9rem);
+  font-weight: var(--font-display-weight);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.detail-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4vw, 3.5rem);
+  font-weight: var(--font-display-weight);
+  line-height: 1.08;
+  color: var(--lin-white);
+  margin-bottom: clamp(0.5rem, 1vw, 0.875rem);
+}
+
+
+.detail-desc {
+  font-family: var(--font-display);
+  font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+  color: var(--lin-subtle);
+  font-weight: var(--font-display-weight);
+  line-height: 1.65;
+  max-width: 56ch;
+}
+
+/* USE CASE CARDS */
+.cases-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  gap: clamp(0.75rem, 1.5vw, 1.1rem);
+}
+
+.use-card {
+  background: rgba(99,153,175,0.05);
+  border: 1px solid rgba(99,153,175,0.1);
+  border-radius: 10px;
+  padding: clamp(1rem, 1.75vw, 1.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  position: relative;
+}
+
+.use-card:hover {
+  border-color: rgba(99,153,175,0.25);
+  background: rgba(99,153,175,0.08);
+}
+
+.use-card-index {
+    font-family: var(--font-numbers);
+    font-size: clamp(0.85rem, 1.5vw, 1.1rem);
+    font-style: normal;
+    color: var(--lin-primary);
+    opacity: 1;
+}
+
+.use-card-text {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 1.25vw, 1,2rem);
+  color: var(--lin-wash);
+  line-height: 1.6;
+  font-weight: normal;
+  flex: 1;
+}
+
+.use-card-tag {
+  display: inline-flex;
+  align-self: flex-start;
+  font-family: var(--font-numbers);
+  font-size: clamp(0.65rem, 0.95vw, 0.8rem);
+  font-weight: bold;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 4px;
+  background: rgba(99,153,175,0.1);
+  color: var(--lin-light);
+}
+
+/* NAV DOTS */
+.nav-dots-detail {
+  display: flex;
+  gap: 6px;
+  margin-top: clamp(2rem, 4vw, 3rem);
+  flex-wrap: wrap;
+}
+
+.nav-dot-detail {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(163,200,214,0.2);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.nav-dot-detail.active {
+  background: var(--accent);
+  transform: scale(1.4);
+}
+
+@media (max-width: 600px) {
+  .cases-grid { grid-template-columns: 1fr; }
+  .category-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.1ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- HOME SCREEN -->
+<div id="home" class="screen active">
+  <div class="home-bg-circle home-bg-circle-1"></div>
+  <div class="home-bg-circle home-bg-circle-2"></div>
+
+  <div class="home-header">
+    <div class="home-eyebrow">
+      <!-- <div class="home-eyebrow-line"></div> -->
+      <div class="home-eyebrow-logo" id="logoContainer">
+        <img src="https://laislanetwork.org/wp-content/uploads/2023/08/LaIslaNetwork_Logo_PMS.svg" alt="La Isla Network Logo" style="height: 100%; width: auto; filter: brightness(0) saturate(100%) invert(100%); display: block;">
+      </div>
+      <span class="home-eyebrow-text">La Isla Network · Claude</span>
+    </div>
+    <h1 class="home-title">What Claude can do for your work</h1>
+    <p class="home-subtitle">Select an area of expertise to explore <strong>specific, actionable use cases</strong> calibrated for LIN's research, programs, and operations.</p>
+  </div>
+
+  <div class="category-grid" id="categoryGrid"></div>
+</div>
+
+<!-- DETAIL SCREEN -->
+<div id="detail" class="screen">
+  <nav class="detail-nav">
+    <button class="back-btn" id="backBtn">
+      <svg viewBox="0 0 12 12"><path d="M8 1L3 6l5 5"/></svg>
+      All areas
+    </button>
+  </nav>
+
+  <div class="detail-header">
+    <div class="detail-eyebrow">
+      <div class="detail-eyebrow-dot"></div>
+      <span class="detail-eyebrow-text" id="detailEyebrow"></span>
+    </div>
+    <h2 class="detail-title" id="detailTitle"></h2>
+    <p class="detail-desc" id="detailDesc"></p>
+  </div>
+
+  <div class="cases-grid" id="casesGrid"></div>
+
+  <div class="nav-dots-detail" id="navDotsDetail"></div>
+</div>
+
+<script>
+const categories = [
+  {
+    id: 1,
+    name: "Occupational Hygiene & Exposure Science",
+    color: "#7DDBB8",
+    desc: "From raw monitoring data to exposure profiles, compliance reports, and methodology comparisons.",
+    cases: [
+      { text: "Map WBGT readings across field sites and flag exceedances against ACGIH TLV thresholds automatically", tag: "Monitoring" },
+      { text: "Generate a site exposure profile from raw monitoring data: WBGT, core temperature, heart rate, and shift duration", tag: "Analysis" },
+      { text: "Compare two exposure assessment methodologies and identify where assumptions diverge", tag: "Methods" },
+      { text: "Draft an occupational hygiene report section directly from field measurement tables", tag: "Reporting" },
+      { text: "Build a heat exposure matrix by job task, time of day, and season from raw field logs", tag: "Data" },
+      { text: "Generate a site-specific WBGT monitoring protocol for a new country entry based on existing LIN field standards", tag: "Protocol" }
+    ]
+  },
+  {
+    id: 2,
+    name: "Epidemiology & Public Health Research",
+    color: "#6399AF",
+    desc: "Study design review, evidence synthesis, and academic writing grounded in LIN's field evidence.",
+    cases: [
+      { text: "Review a study design for confounding risks and internal validity gaps before ethics submission", tag: "Design" },
+      { text: "Generate alternative hypotheses from unexpected AKI or eGFR incidence patterns in field data", tag: "Hypothesis" },
+      { text: "Draft a systematic review search strategy for heat stress and CKDnt across PubMed, Embase, and Web of Science", tag: "Literature" },
+      { text: "Extract and synthesize findings from 10 uploaded papers into a comparative evidence table", tag: "Synthesis" },
+      { text: "Identify methodological gaps between two cohort studies from different geographies", tag: "Comparison" },
+      { text: "Write a Discussion section connecting field results to the broader CKDnt and occupational heat exposure literature", tag: "Writing" },
+      { text: "Anticipate peer reviewer objections to a manuscript's methods section before submission", tag: "Peer Review" }
+    ]
+  },
+  {
+    id: 3,
+    name: "Health Economics & Impact Evaluation",
+    color: "#F2C96A",
+    desc: "ROI modeling, sensitivity analysis, and translating productivity data into policy-ready narratives.",
+    cases: [
+      { text: "Build a replicable ROI model skeleton from Ingenio San Antonio results for a new agroindustrial context", tag: "Modeling" },
+      { text: "Run sensitivity analysis: what happens to ROI if hospitalization reduction is 40% instead of 80%", tag: "Sensitivity" },
+      { text: "Convert a productivity dataset from Excel into a policy brief narrative for a labor ministry", tag: "Policy" },
+      { text: "Draft a cost-effectiveness argument comparing two intervention modalities for a donor proposal", tag: "Proposals" },
+      { text: "Identify gaps in an existing economic model against recent literature using real-time web search", tag: "Literature" },
+      { text: "Generate a budget rationale from a scope of work and program logic model", tag: "Budget" }
+    ]
+  },
+  {
+    id: 4,
+    name: "Organizational Psychology & HR",
+    color: "#C98ADB",
+    desc: "Behavior change frameworks, KAPP instruments, and Management of Change plans for field adoption.",
+    cases: [
+      { text: "Design a Management of Change communication plan for introducing RSHS protocols at a new site", tag: "MoC" },
+      { text: "Analyze supervisor training feedback forms and extract resistance patterns and adoption barriers", tag: "Analysis" },
+      { text: "Build a behavior change framework for heat safety adoption calibrated for a specific field context", tag: "Framework" },
+      { text: "Draft a KAPP survey instrument calibrated for agricultural workers with low literacy levels", tag: "KAPP" },
+      { text: "Synthesize KAPP survey results into an actionable gap analysis for program design", tag: "KAPP" },
+      { text: "Generate a training needs assessment from a set of field observation notes", tag: "Training" }
+    ]
+  },
+  {
+    id: 5,
+    name: "Regenerative Agriculture & Environmental Resilience",
+    color: "#7DB87D",
+    desc: "Connecting heat stress risk to supply chain resilience, crop yield, and certification frameworks.",
+    cases: [
+      { text: "Map overlap between heat stress risk zones and agricultural productivity loss projections by geography", tag: "Risk Mapping" },
+      { text: "Draft a supply chain resilience brief connecting extreme heat exposure to crop yield and labor risk", tag: "Supply Chain" },
+      { text: "Identify entry points for LIN's Triple A model within a regenerative agriculture certification framework", tag: "Integration" },
+      { text: "Analyze climate projection descriptions and flag sites at highest combined heat, drought, and labor risk", tag: "Climate Risk" },
+      { text: "Generate a sector profile for a new country combining climate exposure, labor conditions, and LIN program fit", tag: "Scoping" }
+    ]
+  },
+  {
+    id: 6,
+    name: "Climate Science & Risk Modeling",
+    color: "#85B0C3",
+    desc: "WBGT projections, risk scoring matrices, and grant-ready climate context without 'climate change.'",
+    cases: [
+      { text: "Generate climate risk narratives from WBGT projection data for a specific geography and sector", tag: "Narrative" },
+      { text: "Draft the climate context section of a grant proposal using IPCC-aligned language without 'climate change'", tag: "Grants" },
+      { text: "Compare heat risk models across two geographies and identify transferable assumptions and data gaps", tag: "Comparison" },
+      { text: "Build a risk scoring matrix combining WBGT, humidity, altitude, labor intensity, and shift length", tag: "Modeling" },
+      { text: "Translate a technical climate projection report into a one-page brief for a non-specialist funder", tag: "Translation" }
+    ]
+  },
+  {
+    id: 7,
+    name: "Project & Program Management",
+    color: "#E8685A",
+    desc: "Logframes, workplans, risk registers, and donor updates generated from field notes and raw data.",
+    cases: [
+      { text: "Convert a project logframe into a monitoring and evaluation dashboard outline with indicator definitions", tag: "M&E" },
+      { text: "Draft a quarterly donor update from raw field notes and progress data in a consistent LIN voice", tag: "Reporting" },
+      { text: "Generate a risk register for a new country entry based on existing LIN program experience", tag: "Risk" },
+      { text: "Build a detailed workplan from a scope of work document with auto-assigned task categories and timelines", tag: "Planning" },
+      { text: "Summarize a set of meeting notes into decisions, actions, owners, and deadlines in table format", tag: "Meetings" },
+      { text: "Generate a lessons learned document from a set of end-of-season field reports", tag: "Learning" }
+    ]
+  },
+  {
+    id: 8,
+    name: "Technology & Data Systems",
+    color: "#5AB8C4",
+    desc: "Data dictionaries, cleaning scripts, HEAT app exports, and plain-language statistical interpretation.",
+    cases: [
+      { text: "Write a data dictionary for a field monitoring dataset before sharing with external research partners", tag: "Documentation" },
+      { text: "Identify inconsistencies and missing values in a HEAT app export before running analysis", tag: "QA" },
+      { text: "Draft technical data collection requirements for a new field site protocol", tag: "Protocol" },
+      { text: "Generate a Stata or R cleaning script from a plain-language description of the raw dataset structure", tag: "Code" },
+      { text: "Explain what a complex Stata regression output means in plain language for a non-statistician audience", tag: "Interpretation" },
+      { text: "Debug a Stata or R script and explain what caused the error and how to prevent it", tag: "Debug" }
+    ]
+  },
+  {
+    id: 9,
+    name: "Policy & Regulatory Affairs",
+    color: "#DB9A6A",
+    desc: "Standards mapping, regulatory comments, legislative language, and evidence-to-policy translation.",
+    cases: [
+      { text: "Map LIN's existing field evidence against the specific requirements of a target EU CSDDD provision", tag: "Compliance" },
+      { text: "Draft a regulatory comment letter responding to a proposed labor heat stress standard", tag: "Regulatory" },
+      { text: "Compare Bonsucro, Fair Trade USA, and ISO 45001 heat stress requirements and identify gaps and overlaps", tag: "Standards" },
+      { text: "Build a policy brief from three uploaded research papers targeting a specific ministry or agency", tag: "Policy Brief" },
+      { text: "Generate legislative language for a heat stress protection standard based on LIN's field evidence and data", tag: "Legislative" },
+      { text: "Identify which LIN programs and results are most relevant for a specific funding call or policy window", tag: "Positioning" }
+    ]
+  },
+  {
+    id: 10,
+    name: "Communications & Knowledge Translation",
+    color: "#A8C8D6",
+    desc: "From technical reports to donor summaries, keynotes, FAQ documents, and three-audience outputs.",
+    cases: [
+      { text: "Translate a 30-page technical report into a 2-page donor summary without losing key evidence points", tag: "Simplification" },
+      { text: "Convert a paper abstract into three versions: journal readers, policymakers, and field supervisors", tag: "Multi-audience" },
+      { text: "Draft a keynote narrative arc from a set of bullet points and data tables in LIN's voice", tag: "Keynote" },
+      { text: "Generate a FAQ document from a technical intervention protocol for a non-specialist audience", tag: "FAQ" },
+      { text: "Write a field case study from implementation notes following LIN's evidence-based, non-victim voice", tag: "Case Study" },
+      { text: "Adapt a research finding into a LinkedIn post, a press release, and a donor email — three formats, one flow", tag: "Multi-format" }
+    ]
+  },
+  {
+    id: 11,
+    name: "LIN Core Services",
+    color: "#606637",
+    desc: "Desk reviews, KAPP studies, CoE design, Triple A outputs, and PREP implementation — full service flows.",
+    cases: [
+      { text: "Desk Review: upload 15 papers and produce a structured evidence synthesis with identified gaps and recommendations", tag: "Desk Review" },
+      { text: "KAPP Study: generate survey instrument, codebook, analysis plan, and results narrative in sequence", tag: "KAPP" },
+      { text: "Management of Change: build a full MoC plan from a site assessment report for a new intervention rollout", tag: "MoC" },
+      { text: "Center of Excellence: draft the design document for a new CoE using the Nicaragua and Guatemala models as reference", tag: "CoE" },
+      { text: "Triple A: convert a site visit report into a structured Assess, Address, Assist output with action priorities", tag: "Triple A" },
+      { text: "PREP model: generate a PREP implementation checklist calibrated for a specific sector, geography, and season", tag: "PREP" },
+      { text: "ENSURE-style scoping: produce a migrant worker risk profile from available secondary data for a new corridor", tag: "ENSURE" }
+    ]
+  },
+  {
+    id: 12,
+    name: "Multi-step Workflows",
+    color: "#B87DB8",
+    desc: "One input, multiple outputs in cascade. From field notes to final paper. From data to donor brief.",
+    cases: [
+      { text: "Field notes → thematic coding → findings → results section → discussion → abstract. One Project, no copy-paste", tag: "Research Flow" },
+      { text: "Raw KAPP data → gap analysis → behavior change framework → training design → evaluation plan", tag: "KAPP Flow" },
+      { text: "Site assessment → exposure profile → intervention design → budget → donor brief", tag: "Program Flow" },
+      { text: "Paper in English → technical summary → policy brief → field supervisor checklist. Four audiences, one flow", tag: "Translation Flow" },
+      { text: "Logframe → workplan → risk register → quarterly report template. Full program cycle in one Project", tag: "PM Flow" },
+      { text: "Interview transcript → coded themes → qualitative analysis → discussion section with cross-references", tag: "Qualitative Flow" },
+      { text: "Meeting notes → decisions log → action items → follow-up email → updated workplan", tag: "Ops Flow" }
+    ]
+  }
+];
+
+// Build home
+const grid = document.getElementById('categoryGrid');
+categories.forEach(cat => {
+  const card = document.createElement('div');
+  card.className = 'cat-card';
+  card.style.setProperty('--accent', cat.color);
+  card.innerHTML = `
+    <div class="cat-number">${cat.id}</div>
+    <div class="cat-name">${cat.name}</div>
+    <div class="cat-count">${cat.cases.length} use cases</div>
+    <div class="cat-arrow">
+      <svg viewBox="0 0 12 12"><path d="M2 6h8M6 2l4 4-4 4"/></svg>
+    </div>
+  `;
+  card.addEventListener('click', () => showDetail(cat));
+  grid.appendChild(card);
+});
+
+function showDetail(cat) {
+  document.getElementById('home').classList.remove('active');
+  document.getElementById('detail').classList.add('active');
+  window.scrollTo(0,0);
+
+  document.documentElement.style.setProperty('--accent', cat.color);
+
+  document.getElementById('detailEyebrow').textContent = `Area ${cat.id < 10 ? '0'+cat.id : cat.id} · ${cat.cases.length} use cases`;
+  document.getElementById('detailTitle').textContent = cat.name;
+  document.getElementById('detailDesc').textContent = cat.desc;
+
+  const casesGrid = document.getElementById('casesGrid');
+  casesGrid.innerHTML = '';
+  cat.cases.forEach((c, i) => {
+    const card = document.createElement('div');
+    card.className = 'use-card';
+    card.innerHTML = `
+      <div class="use-card-index">${cat.id}.${i+1}</div>
+      <p class="use-card-text">${c.text}</p>
+      <span class="use-card-tag">${c.tag}</span>
+    `;
+    casesGrid.appendChild(card);
+  });
+
+  // mini nav dots
+  const dots = document.getElementById('navDotsDetail');
+  dots.innerHTML = '';
+  categories.forEach((c, i) => {
+    const d = document.createElement('button');
+    d.className = 'nav-dot-detail' + (c.id === cat.id ? ' active' : '');
+    d.style.setProperty('--accent', c.color);
+    d.title = c.name;
+    d.addEventListener('click', () => showDetail(categories[i]));
+    dots.appendChild(d);
+  });
+}
+
+document.getElementById('backBtn').addEventListener('click', () => {
+  document.getElementById('detail').classList.remove('active');
+  document.getElementById('home').classList.add('active');
+  window.scrollTo(0,0);
+});
+</script>
+</body>
+</html>

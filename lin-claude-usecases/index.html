@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,6 +32,7 @@
   --cat-10: #A8C8D6;
   --cat-11: #606637;
   --cat-12: #B87DB8;
+  --cat-13: #A24A5F;
 
   --font-display: acumin-pro, sans-serif;
   --font-display-weight: 700;
@@ -450,14 +450,14 @@ const categories = [
     id: 1,
     name: "Occupational Hygiene & Exposure Science",
     color: "#7DDBB8",
-    desc: "From raw monitoring data to exposure profiles, compliance reports, and methodology comparisons.",
+    desc: "From raw monitoring data to exposure profiles, methodology critique, and physiological pattern detection.",
     cases: [
       { text: "Map WBGT readings across field sites and flag exceedances against ACGIH TLV thresholds automatically", tag: "Monitoring" },
       { text: "Generate a site exposure profile from raw monitoring data: WBGT, core temperature, heart rate, and shift duration", tag: "Analysis" },
       { text: "Compare two exposure assessment methodologies and identify where assumptions diverge", tag: "Methods" },
-      { text: "Draft an occupational hygiene report section directly from field measurement tables", tag: "Reporting" },
+      { text: "Detect physiological strain patterns inconsistent with reported workload — flag workers whose heart rate and core temperature suggest higher exposure than the assigned task", tag: "Pattern Detection" },
       { text: "Build a heat exposure matrix by job task, time of day, and season from raw field logs", tag: "Data" },
-      { text: "Generate a site-specific WBGT monitoring protocol for a new country entry based on existing LIN field standards", tag: "Protocol" }
+      { text: "Pressure-test a proposed sampling strategy: identify selection bias, undersampled job categories, and shift periods at risk of missing peak exposure", tag: "Sampling Critique" }
     ]
   },
   {
@@ -468,7 +468,7 @@ const categories = [
     cases: [
       { text: "Review a study design for confounding risks and internal validity gaps before ethics submission", tag: "Design" },
       { text: "Generate alternative hypotheses from unexpected AKI or eGFR incidence patterns in field data", tag: "Hypothesis" },
-      { text: "Draft a systematic review search strategy for heat stress and CKDnt across PubMed, Embase, and Web of Science", tag: "Literature" },
+      { text: "Run a contradiction sweep across LIN's published evidence: upload 5–10 papers and flag where definitions, indicator thresholds, or methodological choices are inconsistent across the body of work", tag: "Internal Audit" },
       { text: "Extract and synthesize findings from 10 uploaded papers into a comparative evidence table", tag: "Synthesis" },
       { text: "Identify methodological gaps between two cohort studies from different geographies", tag: "Comparison" },
       { text: "Write a Discussion section connecting field results to the broader CKDnt and occupational heat exposure literature", tag: "Writing" },
@@ -486,7 +486,7 @@ const categories = [
       { text: "Convert a productivity dataset from Excel into a policy brief narrative for a labor ministry", tag: "Policy" },
       { text: "Draft a cost-effectiveness argument comparing two intervention modalities for a donor proposal", tag: "Proposals" },
       { text: "Identify gaps in an existing economic model against recent literature using real-time web search", tag: "Literature" },
-      { text: "Generate a budget rationale from a scope of work and program logic model", tag: "Budget" }
+      { text: "Reverse-engineer the financial argument a corporate CFO would use to reject the intervention, then pre-rebut it line by line using the actual cost categories they would name: capex, opex, productivity loss, insurance premiums, attrition, brand risk", tag: "CFO Rebuttal" }
     ]
   },
   {
@@ -500,7 +500,7 @@ const categories = [
       { text: "Build a behavior change framework for heat safety adoption calibrated for a specific field context", tag: "Framework" },
       { text: "Draft a KAPP survey instrument calibrated for agricultural workers with low literacy levels", tag: "KAPP" },
       { text: "Synthesize KAPP survey results into an actionable gap analysis for program design", tag: "KAPP" },
-      { text: "Generate a training needs assessment from a set of field observation notes", tag: "Training" }
+      { text: "Pre-mortem on RSHS adoption at a new site: describe the workforce, supervisors, and operational pressures, and Claude writes the post-mortem of how adoption failed in 6 months — political, cultural, supervisor-incentive, and worker-trust failure modes — before rollout", tag: "Pre-mortem" }
     ]
   },
   {
@@ -510,7 +510,7 @@ const categories = [
     desc: "Connecting heat stress risk to supply chain resilience, crop yield, and certification frameworks.",
     cases: [
       { text: "Map overlap between heat stress risk zones and agricultural productivity loss projections by geography", tag: "Risk Mapping" },
-      { text: "Draft a supply chain resilience brief connecting extreme heat exposure to crop yield and labor risk", tag: "Supply Chain" },
+      { text: "Map a corporate buyer's supplier base against heat-exposure and labor-risk profiles, then identify which suppliers would fail a Bonsucro or Fair Trade audit under stricter heat-stress provisions", tag: "Audit Mapping" },
       { text: "Identify entry points for LIN's Triple A model within a regenerative agriculture certification framework", tag: "Integration" },
       { text: "Analyze climate projection descriptions and flag sites at highest combined heat, drought, and labor risk", tag: "Climate Risk" },
       { text: "Generate a sector profile for a new country combining climate exposure, labor conditions, and LIN program fit", tag: "Scoping" }
@@ -526,7 +526,7 @@ const categories = [
       { text: "Draft the climate context section of a grant proposal using IPCC-aligned language without 'climate change'", tag: "Grants" },
       { text: "Compare heat risk models across two geographies and identify transferable assumptions and data gaps", tag: "Comparison" },
       { text: "Build a risk scoring matrix combining WBGT, humidity, altitude, labor intensity, and shift length", tag: "Modeling" },
-      { text: "Translate a technical climate projection report into a one-page brief for a non-specialist funder", tag: "Translation" }
+      { text: "Generate the response an ILO or WHO official would write against a LIN climate-health brief — invoking 'leading hypothesis' and multi-etiology framing — so the brief is hardened before it goes public", tag: "Counter-Framing" }
     ]
   },
   {
@@ -538,8 +538,8 @@ const categories = [
       { text: "Convert a project logframe into a monitoring and evaluation dashboard outline with indicator definitions", tag: "M&E" },
       { text: "Draft a quarterly donor update from raw field notes and progress data in a consistent LIN voice", tag: "Reporting" },
       { text: "Generate a risk register for a new country entry based on existing LIN program experience", tag: "Risk" },
-      { text: "Build a detailed workplan from a scope of work document with auto-assigned task categories and timelines", tag: "Planning" },
-      { text: "Summarize a set of meeting notes into decisions, actions, owners, and deadlines in table format", tag: "Meetings" },
+      { text: "Stress-test a workplan: identify the three most likely failure modes given LIN's history in similar programs, and propose mitigations before kickoff", tag: "Stress Test" },
+      { text: "Reconcile conflicting progress reports from a field team and a country office — identify where the narratives diverge, what each is incentivized to under- or over-report, and what a donor would notice", tag: "Reconciliation" },
       { text: "Generate a lessons learned document from a set of end-of-season field reports", tag: "Learning" }
     ]
   },
@@ -551,7 +551,7 @@ const categories = [
     cases: [
       { text: "Write a data dictionary for a field monitoring dataset before sharing with external research partners", tag: "Documentation" },
       { text: "Identify inconsistencies and missing values in a HEAT app export before running analysis", tag: "QA" },
-      { text: "Draft technical data collection requirements for a new field site protocol", tag: "Protocol" },
+      { text: "Pre-check a planned dataset against the intended analysis: describe the variables you'll collect and the regression you plan to run, and Claude identifies missing covariates, power problems, and structural blockers before you go to the field", tag: "Pre-Analysis" },
       { text: "Generate a Stata or R cleaning script from a plain-language description of the raw dataset structure", tag: "Code" },
       { text: "Explain what a complex Stata regression output means in plain language for a non-statistician audience", tag: "Interpretation" },
       { text: "Debug a Stata or R script and explain what caused the error and how to prevent it", tag: "Debug" }
@@ -566,7 +566,7 @@ const categories = [
       { text: "Map LIN's existing field evidence against the specific requirements of a target EU CSDDD provision", tag: "Compliance" },
       { text: "Draft a regulatory comment letter responding to a proposed labor heat stress standard", tag: "Regulatory" },
       { text: "Compare Bonsucro, Fair Trade USA, and ISO 45001 heat stress requirements and identify gaps and overlaps", tag: "Standards" },
-      { text: "Build a policy brief from three uploaded research papers targeting a specific ministry or agency", tag: "Policy Brief" },
+      { text: "Reverse-map any corporate certification standard back to LIN's evidence base: identify which LIN studies provide audit-grade support for which clauses, and where the gaps are — producing a sales-ready evidence index keyed to the standard", tag: "Evidence Index" },
       { text: "Generate legislative language for a heat stress protection standard based on LIN's field evidence and data", tag: "Legislative" },
       { text: "Identify which LIN programs and results are most relevant for a specific funding call or policy window", tag: "Positioning" }
     ]
@@ -577,12 +577,12 @@ const categories = [
     color: "#A8C8D6",
     desc: "From technical reports to donor summaries, keynotes, FAQ documents, and three-audience outputs.",
     cases: [
-      { text: "Translate a 30-page technical report into a 2-page donor summary without losing key evidence points", tag: "Simplification" },
+      { text: "Convert a foundation-facing piece into a corporate-ESG piece while preserving every numeric claim, citation, and the IKI vs AKI vs hospitalization distinctions — flag any claim that would weaken or break in translation", tag: "Audience Conversion" },
       { text: "Convert a paper abstract into three versions: journal readers, policymakers, and field supervisors", tag: "Multi-audience" },
       { text: "Draft a keynote narrative arc from a set of bullet points and data tables in LIN's voice", tag: "Keynote" },
       { text: "Generate a FAQ document from a technical intervention protocol for a non-specialist audience", tag: "FAQ" },
       { text: "Write a field case study from implementation notes following LIN's evidence-based, non-victim voice", tag: "Case Study" },
-      { text: "Adapt a research finding into a LinkedIn post, a press release, and a donor email — three formats, one flow", tag: "Multi-format" }
+      { text: "Take a complex finding and produce three versions calibrated for different speeds of reading — a 30-second LinkedIn version, a 3-minute donor email, and a 10-minute policy memo — without losing the IKI/AKI/hospitalization precision", tag: "Tiered Comms" }
     ]
   },
   {
@@ -597,7 +597,8 @@ const categories = [
       { text: "Center of Excellence: draft the design document for a new CoE using the Nicaragua and Guatemala models as reference", tag: "CoE" },
       { text: "Triple A: convert a site visit report into a structured Assess, Address, Assist output with action priorities", tag: "Triple A" },
       { text: "PREP model: generate a PREP implementation checklist calibrated for a specific sector, geography, and season", tag: "PREP" },
-      { text: "ENSURE-style scoping: produce a migrant worker risk profile from available secondary data for a new corridor", tag: "ENSURE" }
+      { text: "ENSURE-style scoping: produce a migrant worker risk profile from available secondary data for a new corridor", tag: "ENSURE" },
+      { text: "Corporate Partnership Pre-mortem: describe a proposed pilot — sector, country, scale, contract terms — and Claude writes the post-mortem of how it failed in 18 months, surfacing political, operational, measurement, and partner-side failure modes before the contract is signed", tag: "Pre-mortem" }
     ]
   },
   {
@@ -612,7 +613,23 @@ const categories = [
       { text: "Paper in English → technical summary → policy brief → field supervisor checklist. Four audiences, one flow", tag: "Translation Flow" },
       { text: "Logframe → workplan → risk register → quarterly report template. Full program cycle in one Project", tag: "PM Flow" },
       { text: "Interview transcript → coded themes → qualitative analysis → discussion section with cross-references", tag: "Qualitative Flow" },
-      { text: "Meeting notes → decisions log → action items → follow-up email → updated workplan", tag: "Ops Flow" }
+      { text: "Meeting notes → decisions log → action items → follow-up email → updated workplan", tag: "Ops Flow" },
+      { text: "Manuscript draft → target journal style audit → Reviewer 2 rejection letter → response-to-reviewers draft → revised methods section. Full peer review rehearsal before submission", tag: "Peer Review Flow" }
+    ]
+  },
+  {
+    id: 13,
+    name: "Evidence Integrity & Quality Assurance",
+    color: "#A24A5F",
+    desc: "Protecting LIN's evidence base from accuracy drift, framing leaks, and conflation errors in everything that goes out the door.",
+    cases: [
+      { text: "Accuracy trap audit: paste any external-facing draft and Claude returns a severity-tagged redline flagging IKI vs hospitalization conflation, ISA-ROI over-generalization, undefined acronyms, and 'climate change' framing leaks", tag: "Accuracy Audit" },
+      { text: "Worker-voice integrity check: scan any draft for places workers are framed as recipients, beneficiaries, or victims rather than experts in their own reality — returns a redline with rewrite suggestions", tag: "Voice Integrity" },
+      { text: "Stat-claim audit: tag every quantitative claim in a document with source paper, exact figure, whether it's used precisely, and the specific accuracy risk if any — produces a citation-grade redline", tag: "Stat Audit" },
+      { text: "Cross-paper contradiction sweep: upload LIN's body of published work and Claude flags every place a definition, threshold, or methodological choice is presented inconsistently — outputs a reconciliation memo", tag: "Internal Consistency" },
+      { text: "ILO/WHO counter-framing rebuttal: paste any LIN policy brief and Claude generates the response a multilateral official would write invoking 'leading hypothesis' framing — so you harden the brief before publication", tag: "Counter-Framing" },
+      { text: "Reviewer-pattern extractor: paste the last 3–4 rejected grants plus reviewer comments and Claude identifies the systematic critique pattern LIN keeps tripping on, then rewrites the relevant section to address it", tag: "Reviewer Pattern" },
+      { text: "Pre-publication acronym audit: scan any document for CKDnt, AKI, IKI, eGFR, WBGT, RSHS, PREP, CoE, MoC and confirm each is defined on first use, used consistently, and not conflated with related terms", tag: "Acronym Audit" }
     ]
   }
 ];
